@@ -6,8 +6,8 @@ credit:
 ////////////////////////////////////////////// A Marphys Studio game \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 - Developement:
     - Wiss (me)
-    - E.B (he used chatgpt and gave me a code that was bugged as fuck)
-    - M.N-G (he doesn't worked)
+    - E.B 
+    - M.N-G
 - Game design:
     - Wiss (also me)
     - Romanng
