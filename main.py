@@ -29,37 +29,39 @@ def draw_interface(screen):
     font=pygame.font.Font(None,48)
     # Draw the pixel label
     pixel_label = font.render(str(pixel_value), True, (255,255,255))
-    pixel_rect = pixel_label.get_rect(center=(250, HEIGHT // 2))
+    pixel_rect = pixel_label.get_rect(center=(250, 400))
+    bg=pygame.image.load("bg.png").convert()
+    screen.blit(bg,(0,0))
     screen.blit(pixel_label, pixel_rect)
 
     # Draw the dimension label
     dimension_label = font.render(str(dimension_value), True, (255,255,255))
-    dimension_rect = dimension_label.get_rect(center=(350, HEIGHT // 2))
+    dimension_rect = dimension_label.get_rect(center=(350, 400))
     screen.blit(dimension_label, dimension_rect)
 
     # Draw the up arrow for pixel
     up_arrow_pix = font.render("^", True, SELECTED_COLOR if selected_element == "pixel" else (255,255,255))
-    up_arrow_pix_rect = up_arrow_pix.get_rect(center=(250, 250))
+    up_arrow_pix_rect = up_arrow_pix.get_rect(center=(250, 350))
     screen.blit(up_arrow_pix, up_arrow_pix_rect)
 
     # Draw the down arrow for pixel
     down_arrow_pix = font.render("v", True, SELECTED_COLOR if selected_element == "pixel" else (255,255,255))
-    down_arrow_pix_rect = down_arrow_pix.get_rect(center=(250, 350))
+    down_arrow_pix_rect = down_arrow_pix.get_rect(center=(250, 450))
     screen.blit(down_arrow_pix, down_arrow_pix_rect)
 
     # Draw the up arrow for dimension
     up_arrow_dim = font.render("^", True, SELECTED_COLOR if selected_element == "dimension" else (255,255,255))
-    up_arrow_dim_rect = up_arrow_dim.get_rect(center=(350, 250))
+    up_arrow_dim_rect = up_arrow_dim.get_rect(center=(350, 350))
     screen.blit(up_arrow_dim, up_arrow_dim_rect)
 
     # Draw the down arrow for dimension
     down_arrow_dim = font.render("v", True, SELECTED_COLOR if selected_element == "dimension" else (255,255,255))
-    down_arrow_dim_rect = down_arrow_dim.get_rect(center=(350, 350))
+    down_arrow_dim_rect = down_arrow_dim.get_rect(center=(350, 450))
     screen.blit(down_arrow_dim, down_arrow_dim_rect)
 
     # Draw the cross label
     cross_label = font.render("X", True, (255,255,255))
-    cross_rect = cross_label.get_rect(center=(WIDTH // 2, HEIGHT // 2))
+    cross_rect = cross_label.get_rect(center=(WIDTH // 2, 400))
     screen.blit(cross_label, cross_rect)
 
     # Update the display
