@@ -13,6 +13,7 @@ credit:
     - Romanng
 - OST:
     - Romanng
+  
 The maze generator algorithm is a "Recursive Backtracking" algo that I found on internet I don't remember from who.
 
 |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
