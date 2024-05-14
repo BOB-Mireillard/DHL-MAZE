@@ -152,7 +152,7 @@ def main(screen,pixel_value,dimension_value):
 
     yellow_square_generated = False
     collected = False
-    ost=["ost/1.mp3","ost/2.mp3",'ost/3.mp3']
+    ost=["supplies/ost/1.mp3","supplies/ost/2.mp3",'supplies/ost/3.mp3']
 
     while loop:
 
@@ -160,19 +160,17 @@ def main(screen,pixel_value,dimension_value):
                 
             if maze_width * maze_height >= 100:
                 ost = []
-                ost.append('ost/amixem.mp3')
-                ost.append('ost/A_Hundred_Truth.mp3')
-                ost.append('ost/PIANO.mp3')
+                ost.append('supplies/ost/amixem.mp3')
+                ost.append('supplies/ost/A_Hundred_Truth.mp3')
+                ost.append('supplies/ost/PIANO.mp3')
             if maze_width * maze_height >= 324:
-                ost.remove('ost/PIANO.mp3')
-                ost.append('ost/CROSSEX.mp3')
-                ost.append('ost/Dilema.mp3')
+                ost.remove('supplies/ost/PIANO.mp3')
+                ost.append('supplies/ost/CROSSEX.mp3')
+                ost.append('supplies/ost/Dilema.mp3')
 
             music = random.choice(ost)
             pygame.mixer.music.load(music)
-            print(music)
             pygame.mixer.music.play()
-            print(ost)
 
             
         for event in pygame.event.get():
