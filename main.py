@@ -17,6 +17,8 @@ SELECTED_COLOR = (255, 0, 0)
 # Initialize the selected element
 selected_element = "pixel"
 pygame.display.set_caption("DHL-Maze")
+logo=pygame.image.load("logo.png")
+pygame.display.set_icon(logo)
 
 #//////////////////////////////////           \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 #////////////////////////////////// INTERFACE \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -127,7 +129,7 @@ def main(screen,pixel_value,dimension_value):
 
     global square_width, player_rect, border, level, yellow_square_generated, collected
 
-    maze_width =pixel_value
+    maze_width = pixel_value
     maze_height = dimension_value
 
     square_width = round(440 / max(maze_width, maze_height))
@@ -143,7 +145,7 @@ def main(screen,pixel_value,dimension_value):
 
     player_pos = pygame.Vector2(stack.top().square_x, stack.top().square_y)
 
-    level = level
+    
     police = pygame.font.Font("Wisscraft.ttf", 50)
     police2 = pygame.font.Font("Wisscraft.ttf", 25)
     level_text = police.render("LEVEL " + str(level), True, (255, 40, 0))
@@ -151,23 +153,23 @@ def main(screen,pixel_value,dimension_value):
 
     yellow_square_generated = False
     collected = False
-
     ost=["ost/1.mp3","ost/2.mp3",'ost/3.mp3']
+
     while loop:
 
-        if pygame.mixer.music.get_busy()==False:
+        if pygame.mixer.music.get_busy() == False:
                 
-            if maze_width * maze_height >=100:
-                ost=[]
+            if maze_width * maze_height >= 100:
+                ost = []
                 ost.append('ost/amixem.mp3')
                 ost.append('ost/A_Hundred_Truth.mp3')
                 ost.append('ost/PIANO.mp3')
-            if maze_width * maze_height >=324:
+            if maze_width * maze_height >= 324:
                 ost.remove('ost/PIANO.mp3')
                 ost.append('ost/CROSSEX.mp3')
                 ost.append('ost/Dilema.mp3')
 
-            music=random.choice(ost)
+            music = random.choice(ost)
             pygame.mixer.music.load(music)
             print(music)
             pygame.mixer.music.play()
@@ -192,7 +194,7 @@ def main(screen,pixel_value,dimension_value):
                 if screen.get_at((int(player_pos.x + player_rect), int(player_pos.y))) == (255, 255, 255) or screen.get_at((int(player_pos.x + player_rect), int(player_pos.y))) == (102, 102, 102) or screen.get_at((int(player_pos.x + player_rect), int(player_pos.y))) == (99, 16, 16):
                     player_pos.x += player_rect + border
 
-        draw_screen(screen, squares, maze_generated, screen.get_size(), player_pos, player_rect, border, level_text, taille_text,maze_width,maze_height)
+        draw_screen(screen, squares, maze_generated, screen.get_size(), player_pos, player_rect, border, level_text, taille_text,maze_width,maze_height, count_collected_yellow_squares(squares))
 
         if collect_yellow_square(player_pos, squares):
             collected = True
@@ -283,11 +285,11 @@ class Square:
         self.is_yellow = True  # Mettre à jour l'attribut pour indiquer que le carré est jaune
         self.is_collected = False  # Initialiser à False lors de la création
 
-def draw_screen(screen, squares, maze_generated, win_size, player_pos, player_rect, border, level_text, taille_text,maze_width,maze_height):
+def draw_screen(screen, squares, maze_generated, win_size, player_pos, player_rect, border, level_text, taille_text, maze_width, maze_height, yellow_squares_collected):
     screen.fill((0, 0, 0))
     for square in squares:
         if not (square.is_yellow and square.is_collected):  # Ne dessiner que les carrés jaunes non récoltés
-            square.draw(screen,maze_width,maze_height)
+            square.draw(screen, maze_width, maze_height)
     if maze_generated:
         pygame.draw.rect(screen, (0, 0, 255), pygame.Rect(player_pos.x, player_pos.y, player_rect, player_rect))
 
@@ -306,7 +308,42 @@ def draw_screen(screen, squares, maze_generated, win_size, player_pos, player_re
     # Afficher le texte de la taille
     screen.blit(taille_text, (taille_text_x, taille_text_y))
 
+    # Dessiner la barre de progression
+    bar_x = 185
+    bar_y = level_text_y + level_text.get_height() + 3
+    bar_width = 230
+    bar_height = 12
+    empty_bar_color = (64, 64, 64)
+    filled_bar_color = (255, 255, 0)
+
+    # Dessiner la barre grise avec des coins arrondis
+    border_radius = bar_height // 2
+    pygame.draw.rect(screen, empty_bar_color, (bar_x + border_radius, bar_y, bar_width - 2 * border_radius, bar_height))
+    pygame.draw.rect(screen, empty_bar_color, (bar_x, bar_y + border_radius, bar_width, bar_height - 2 * border_radius))
+    pygame.draw.circle(screen, empty_bar_color, (bar_x + border_radius, bar_y + border_radius), border_radius)
+    pygame.draw.circle(screen, empty_bar_color, (bar_x + bar_width - border_radius, bar_y + border_radius), border_radius)
+    pygame.draw.circle(screen, empty_bar_color, (bar_x + border_radius, bar_y + bar_height - border_radius), border_radius)
+    pygame.draw.circle(screen, empty_bar_color, (bar_x + bar_width - border_radius, bar_y + bar_height - border_radius), border_radius)
+
+    # Calculer la largeur de la barre jaune remplie
+    if yellow_squares_collected > 0:
+        filled_bar_width = bar_width * (yellow_squares_collected / calculate_yellow_squares_count(maze_width, maze_height))
+        if filled_bar_width > 0:
+            pygame.draw.rect(screen, filled_bar_color, pygame.Rect(bar_x, bar_y, filled_bar_width, bar_height))
+            # Dessiner des cercles aux extrémités de la barre jaune
+            pygame.draw.circle(screen, filled_bar_color, (int(bar_x), int(bar_y + bar_height / 2)), 6)  # Diamètre de 12
+            pygame.draw.circle(screen, filled_bar_color, (int(bar_x + filled_bar_width), int(bar_y + bar_height / 2)), 6)  # Diamètre de 12
+
+    # Si aucun carré jaune n'est à collecter, remplir toute la barre avec la couleur jaune
+    if calculate_yellow_squares_count(maze_width, maze_height) == 0:
+        pygame.draw.rect(screen, filled_bar_color, pygame.Rect(bar_x, bar_y, bar_width, bar_height))
+        # Dessiner des cercles aux deux extrémités de la barre
+        pygame.draw.circle(screen, filled_bar_color, (int(bar_x), int(bar_y + bar_height / 2)), 6)  # Diamètre de 12
+        pygame.draw.circle(screen, filled_bar_color, (int(bar_x + bar_width), int(bar_y + bar_height / 2)), 6)  # Diamètre de 12
+
     pygame.display.flip()
+
+
 
 def next_square(stack, squares, maze_width, maze_height, square_width):
     visited = {(square.x, square.y) for square in squares}
@@ -345,10 +382,6 @@ def next_square(stack, squares, maze_width, maze_height, square_width):
         return True
     return False
 
-
-#//////////////////////////////////                    \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-#////////////////////////////////// Victory Conditions \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-#//////////////////////////////////                    \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 def is_on_red_square(player_pos, squares,maze_height,maze_width):
     for square in squares:
         if square.x == maze_width - 1 and square.y == maze_height - 1:
@@ -370,6 +403,9 @@ def calculate_yellow_squares_count(maze_width, maze_height):
     yellow_squares_percentage = 0.05
     yellow_squares_count = int(total_squares * yellow_squares_percentage)
     return yellow_squares_count
+
+def count_collected_yellow_squares(squares):
+    return sum(1 for square in squares if square.is_yellow and square.is_collected)
 
 
 
