@@ -1,3 +1,40 @@
+#///////////////////////////// DHL-MAZE \\\\\\\\\\\\\\\\\\\\\
+
+# DHL-MAZE is a school project made by 4 people 
+
+################################################################################
+#                                                                              #
+#                             Credits for DHL-MAZE                             #
+#                                                                              #
+################################################################################
+
+# Lead Developer:
+#   Wiss
+
+# Developers:
+#   E.B
+#   M.N-G
+
+# Sound Design:
+#   Romanng
+
+# Graphics:
+#   Romanng
+#   Wiss
+
+################################################################################
+
+# We're french so pardon us of the name of the variables and for french words.
+# Enjoy !
+
+
+
+
+
+
+
+
+
 import random
 import sys
 
