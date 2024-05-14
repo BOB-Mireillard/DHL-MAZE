@@ -17,7 +17,7 @@ SELECTED_COLOR = (255, 0, 0)
 # Initialize the selected element
 selected_element = "pixel"
 pygame.display.set_caption("DHL-Maze")
-logo=pygame.image.load("logo.png")
+logo=pygame.image.load("supplies/logo.png")
 pygame.display.set_icon(logo)
 
 #//////////////////////////////////           \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -32,7 +32,7 @@ def draw_interface(screen):
     # Draw the pixel label
     pixel_label = font.render(str(pixel_value), True, (255,255,255))
     pixel_rect = pixel_label.get_rect(center=(250, 400))
-    bg=pygame.image.load("bg.png").convert()
+    bg=pygame.image.load("supplies/bg.png").convert()
     screen.blit(bg,(0,0))
     screen.blit(pixel_label, pixel_rect)
 
@@ -98,8 +98,7 @@ def draw_interface(screen):
             elif event.key == pygame.K_RETURN:
                 done=False
                 main(screen,pixel_value,dimension_value)
-                print("APPUYEZ sur ENTREE pour CONFIRMER")
-# def presse_entree():
+
     
 
 #//////////////////////////////////             \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -146,8 +145,8 @@ def main(screen,pixel_value,dimension_value):
     player_pos = pygame.Vector2(stack.top().square_x, stack.top().square_y)
 
     
-    police = pygame.font.Font("Wisscraft.ttf", 50)
-    police2 = pygame.font.Font("Wisscraft.ttf", 25)
+    police = pygame.font.Font("supplies/Wisscraft.ttf", 50)
+    police2 = pygame.font.Font("supplies/Wisscraft.ttf", 25)
     level_text = police.render("LEVEL " + str(level), True, (255, 40, 0))
     taille_text = police2.render(str(maze_width) + "x" + str(maze_height), True, (255, 40, 0))
 
